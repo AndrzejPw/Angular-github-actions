@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have the 'Angular-github-actions' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Angular-github-actions');
+    expect(app.title).toEqual('Broken unit test');
   });
 
   it('should render title', () => {
