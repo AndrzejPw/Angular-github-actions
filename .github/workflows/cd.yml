@@ -25,11 +25,11 @@ jobs:
     - name: Build Angular app
       run: npm run build --prod
 
-    # - name: Upload artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: dist-${{ github.sha }}
-    #     path: dist
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist-${{ github.sha }}
+        path: dist
       # - name: Deploy to Azure
       # uses: Azure/webapps-deploy@v2
       # with:
@@ -37,16 +37,8 @@ jobs:
       #   slot-name: <Optional-Deployment-Slot> # Remove this line if not using deployment slots
       #   publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
       #   package: ./dist
-    - name: Azure Static Web Apps Deploy
-      uses: Azure/static-web-apps-deploy@v1
-      with:
-        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-        app_location: dist/angular-github-actions
-        skip_app_build: true
-        skip_api_build: true
-        action: upload
-  archive:
-    if: false
+
+  deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -54,6 +46,15 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: dist-${{ github.sha }}
+    - name: Azure Static Web Apps Deploy
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        app_location: 'angular-github-actions'
+        skip_app_build: true
+        output_location: ''
+        skip_api_build: true
+        action: 'upload'
     - name: Store package in GitHub Packages
       run: |
         echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
