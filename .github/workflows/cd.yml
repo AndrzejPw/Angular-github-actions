@@ -25,11 +25,11 @@ jobs:
     - name: Build Angular app
       run: npm run build --prod
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: dist-${{ github.sha }}
-        path: dist
+    # - name: Upload artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: dist-${{ github.sha }}
+    #     path: dist
       # - name: Deploy to Azure
       # uses: Azure/webapps-deploy@v2
       # with:
@@ -46,6 +46,7 @@ jobs:
         skip_api_build: true
         action: upload
   archive:
+    if: false
     runs-on: ubuntu-latest
     needs: build
     steps:
